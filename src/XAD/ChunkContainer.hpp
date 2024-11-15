@@ -432,7 +432,7 @@ class ChunkContainer
     static size_type getNumElements(size_type chunks) { return chunks * chunk_size; }
 
   private:
-    void check_space()
+    XAD_INLINE void check_space()
     {
         /* if (idx_ == chunk_size) */
         /* { */
