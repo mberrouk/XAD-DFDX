@@ -30,7 +30,7 @@ you're optimizing neural networks, solving scientific problems, or performing fi
 
 ## 🌟 Why XAD?
 
-XAD: is trusted by professionals for its **speed**, **flexibility**, and **scalability** across various fields:
+XAD is trusted by professionals for its **speed**, **flexibility**, and **scalability** across various fields:
 
 - **Machine Learning & Deep Learning**: Accelerate neural network training and model optimization.
 - **Optimization in Engineering & Finance**: Solve complex problems with high precision.

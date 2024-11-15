@@ -41,16 +41,7 @@ template <class Scalar, class T2>
 struct scalar_add_op
 {
     XAD_INLINE explicit scalar_add_op(const T2& b) : b_(Scalar(b)) {}
-    XAD_INLINE Scalar operator()(const Scalar& a) const {
-	    if constexpr (std::is_same<Scalar, double>::value) {
-		    return _mm_cvtsd_f64(_mm_add_sd(_mm_set_sd(a), _mm_set_sd(b_))); // Perform SIMD addition
-	    } else if constexpr (std::is_same<Scalar, float>::value) {
-		    return _mm_cvtss_f32(_mm_add_ps(_mm_set_ps(0.0f, a, 0.0f, 0.0f), _mm_set_ps(0.0f, b_, 0.0f, 0.0f))); // Perform SIMD addition
-	    }
-	    else { return a + b_; }
-
-	}
-
+    XAD_INLINE Scalar operator()(const Scalar& a) const { return a + b_; }
     XAD_INLINE Scalar derivative(const Scalar&) const { return Scalar(1); }
     Scalar b_;
 };

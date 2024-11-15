@@ -542,14 +542,10 @@ XAD_FORCE_INLINE T fused_multiply_add(const T& a, const T& b, const T& c)
 
 XAD_FORCE_INLINE double fused_multiply_add(double a, double b, double c)
 {
-//    return std::fma(a, b, c);
-    return c + (a * b);
+    return std::fma(a, b, c);
 }
 
-XAD_FORCE_INLINE float fused_multiply_add(float a, float b, float c) { 
-//	return std::fma(a, b, c); 
-    return c + (a * b);
-}
+XAD_FORCE_INLINE float fused_multiply_add(float a, float b, float c) { return std::fma(a, b, c); }
 
 }  // namespace detail
 
@@ -589,10 +585,10 @@ void Tape<T>::computeAdjointsToImpl(position_type pos, position_type start)
             {
                 for (auto opi = it[-1].first, ope = st.first; opi != ope; ++opi)
                 {
-                    // auto multiplier = ;
-                    // auto slot = ;
-                    auto& der = derivatives_[slot_[opi]];
-                    der = detail::fused_multiply_add(multiplier_[opi], a, der);
+                    auto multiplier = multiplier_[opi];
+                    auto slot = slot_[opi];
+                    auto& der = derivatives_[slot];
+                    der = detail::fused_multiply_add(multiplier, a, der);
                 }
             }
         }
