@@ -33,14 +33,14 @@ struct add_op
 {
     XAD_INLINE Scalar operator()(const Scalar& a, const Scalar& b) const {
         // Optimize for double using SIMD
-        if constexpr (std::is_same<Scalar, double>::value) {
+        if (std::is_same<Scalar, double>::value) {
             //__m128d vec_a = _mm_set_sd(a); // Load a into a SIMD register
             //__m128d vec_b = _mm_set_sd(b); // Load b into a SIMD register
             return _mm_cvtsd_f64(_mm_add_sd(_mm_set_sd(a), _mm_set_sd(b))); // Perform SIMD addition
             //return _mm_cvtsd_f64(result); // Extract the result
         }
         // Optimize for float using SIMD
-        else if constexpr (std::is_same<Scalar, float>::value) {
+        else if (std::is_same<Scalar, float>::value) {
             //__m128 vec_a = _mm_set_ps(0.0f, a, 0.0f, 0.0f); // Load a
             //__m128 vec_b = _mm_set_ps(0.0f, b, 0.0f, 0.0f); // Load b
             //__m128 result = _mm_add_ps(vec_a, vec_b); // Perform SIMD addition
