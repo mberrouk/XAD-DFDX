@@ -229,7 +229,8 @@ class ChunkContainer
 
     void push_back(const_reference v)
     {
-        check_space();
+        if (idx_ == chunk_size)
+          check_space();
 
         ::new (reinterpret_cast<value_type*>(chunkList_[chunk_]) + idx_) value_type(v);
         ++idx_;
@@ -238,7 +239,8 @@ class ChunkContainer
     template <class... Args>
     void emplace_back(Args&&... args)
     {
-        check_space();
+        if (idx_ == chunk_size)
+          check_space();
         ::new (chunkList_[chunk_] + idx_ * sizeof(value_type))
             value_type(std::forward<Args>(args)...);
         ++idx_;
@@ -432,8 +434,8 @@ class ChunkContainer
   private:
     void check_space()
     {
-        if (idx_ == chunk_size)
-        {
+        /* if (idx_ == chunk_size) */
+        /* { */
             if (chunk_ == chunkList_.size() - 1)
             {
                 char* chunk = reinterpret_cast<char*>(
@@ -444,7 +446,7 @@ class ChunkContainer
             }
             ++chunk_;
             idx_ = 0;
-        }
+        /* } */
     }
 
     void check_space(size_type i) { reserve(chunk_ * chunk_size + idx_ + i); }
